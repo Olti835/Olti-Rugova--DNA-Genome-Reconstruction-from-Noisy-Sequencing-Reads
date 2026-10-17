@@ -1,0 +1,1 @@
+from .reads import read_fastq
