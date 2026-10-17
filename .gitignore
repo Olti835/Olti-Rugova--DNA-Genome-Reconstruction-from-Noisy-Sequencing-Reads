@@ -1,0 +1,11 @@
+# Sequencing data and reference genome
+data/raw/
+data/reference/
+data/processed/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.idea/
+*.iml
