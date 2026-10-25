@@ -1,0 +1,1 @@
+from genome_assembler import read_fastq
