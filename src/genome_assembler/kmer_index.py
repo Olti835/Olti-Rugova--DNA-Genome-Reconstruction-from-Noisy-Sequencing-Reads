@@ -8,7 +8,7 @@ def kmer_generation(read, k=5):
         kmer = read[i:i + k]
 
         if "N" not in kmer:
-            kmers.append(kmer)
+            kmers.append((i, kmer))
 
     return kmers
 
@@ -34,7 +34,7 @@ def build_kmer_index(reads, k=5):
     for read_id, read in enumerate(reads):
         kmers = kmer_generation(read, k)
 
-        for position, kmer in enumerate(kmers):
+        for position, kmer in kmers:
             if kmer not in index:
                 index[kmer] = []
 
