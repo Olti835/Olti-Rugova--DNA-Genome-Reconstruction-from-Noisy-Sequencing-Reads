@@ -19,6 +19,29 @@ def candidate_key_generation(index):
 
     return candidate_keys
 
+def candidate_key_filter(candidate_keys, min_shared_kmers=5, min_position_consistency=0.7):
+    filtered_candidates = {}
+    for pair, distances_frequency in candidate_keys.items():
+        freq_sum, pos_consistency = calculate_position_consistency(distances_frequency)
+
+        if freq_sum >= min_shared_kmers and pos_consistency >= min_position_consistency:
+            continue
+
+        filtered_candidates[pair] = candidate_keys.pop(pair)
+
+    return candidate_keys, filtered_candidates
+
+def calculate_position_consistency(distances_frequency):
+    try:
+        frequency_sum = sum(distances_frequency.values())
+        max_frequency = max(distances_frequency.values())
+
+    except ValueError:
+        print("Dictionary is empty")
+
+    return frequency_sum, float(max_frequency/frequency_sum)
+
+
 
 
 
