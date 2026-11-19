@@ -1,12 +1,6 @@
 
 import math
 
-
-# ============================================================
-# 1. K-MER GENERATION
-# UPDATED: Uses yield instead of returning a complete list.
-# ============================================================
-
 def kmer_generation(read, k=5):
 
     if k <= 0:
@@ -18,14 +12,6 @@ def kmer_generation(read, k=5):
 
         if "N" not in kmer:
             yield i, kmer
-
-
-# ============================================================
-# 2. BUILD K-MER DATA
-# NEW: Combines kmers_frequency() and build_kmer_index().
-#
-# Both frequency and index are built in one pass.
-# ============================================================
 
 def build_kmer_data(reads, k=5):
 
@@ -45,12 +31,6 @@ def build_kmer_data(reads, k=5):
 
     return frequency, index
 
-
-# ============================================================
-# 3. K-MER FREQUENCY FILTERING
-# MODIFIED: Handles an empty frequency dictionary.
-# ============================================================
-
 def filter_kmer_frequency(frequency, alpha=0.1):
 
     if not frequency:
@@ -68,12 +48,6 @@ def filter_kmer_frequency(frequency, alpha=0.1):
 
     return frequency, high_freq_kmer
 
-
-# ============================================================
-# 4. K-MER INDEX FILTERING
-# MODIFIED: Handles empty dictionaries.
-# ============================================================
-
 def filter_kmer_index(index, frequency, c=2):
 
     high_frequency_index = {}
@@ -86,12 +60,6 @@ def filter_kmer_index(index, frequency, c=2):
             high_frequency_index[kmer] = index.pop(kmer)
 
     return index, high_frequency_index
-
-
-# ============================================================
-# 5. K-MER STANDARD DEVIATION
-# MODIFIED: Simplified calculation.
-# ============================================================
 
 def kmer_standard_deviation(frequency, c=2):
 
@@ -113,15 +81,12 @@ def kmer_standard_deviation(frequency, c=2):
 
 def build_kmer_index(reads, k=21, alpha=0.1, c=2):
 
-    # Step 1: Generate frequencies and index
     frequency, index = build_kmer_data(reads, k)
 
-    # Step 2: Identify high-frequency k-mers
     normal_frequency, high_freq_kmers = (
         filter_kmer_frequency(frequency, alpha)
     )
 
-    # Step 3: Separate high-frequency index entries
     normal_index, high_frequency_index = (
         filter_kmer_index(index, normal_frequency, c)
     )
